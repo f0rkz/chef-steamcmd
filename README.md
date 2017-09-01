@@ -1,6 +1,6 @@
 # chef-steamcmd Cookbook
 
-[![Build Status](https://travis-ci.org/f0rkz/chef-steamcmd.svg?branch=master)](https://travis-ci.org/f0rkz/chef-steamcmd)
+[![Build Status](https://travis-ci.org/f0rkz/chef-steamcmd.svg?branch=master)](https://travis-ci.org/f0rkz/chef-steamcmd) [![Cookbook Version](https://img.shields.io/cookbook/v/chef-steamcmd.svg)](https://supermarket.chef.io/cookbooks/chef-steamcmd)
 
 Cookbook for managing Steamcmd based dedicated servers.
 
