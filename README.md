@@ -1,8 +1,12 @@
-# steamcmd Cookbook
+# chef-steamcmd Cookbook
 
 [![Build Status](https://travis-ci.org/f0rkz/chef-steamcmd.svg?branch=master)](https://travis-ci.org/f0rkz/chef-steamcmd)
 
 Cookbook for managing Steamcmd based dedicated servers.
+
+# Usage
+
+Include `depends 'chef-steamcmd'` in your `metadata.rb`
 
 # Resources
 

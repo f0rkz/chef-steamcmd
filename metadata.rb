@@ -1,4 +1,4 @@
-name 'steamcmd'
+name 'chef-steamcmd'
 maintainer 'Nick Gray'
 maintainer_email 'f0rkz@f0rkznet.net'
 license 'Apache-2.0'

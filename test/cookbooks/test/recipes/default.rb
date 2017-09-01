@@ -8,7 +8,6 @@ user 'steam' do
   comment 'Steam deployment user'
   system true
   home '/home/steam'
-  manage_home true
   shell '/bin/bash'
 end
 

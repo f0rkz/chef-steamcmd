@@ -1,5 +1,5 @@
 #
-# Cookbook:: steamcmd
+# Cookbook:: chef-steamcmd
 # Recipe:: default
 #
 # Author:: Nick Gray (f0rkz@f0rkznet.net)

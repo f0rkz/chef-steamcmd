@@ -1,5 +1,5 @@
 #
-# Cookbook:: steamcmd
+# Cookbook:: chef-steamcmd
 # Resource:: app
 #
 # Author:: Nick Gray (f0rkz@f0rkznet.net)
@@ -18,6 +18,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+resource_name :steamcmd_app
+
 property :user,                  String, default: 'root'
 property :group,                 String, default: 'root'
 property :steamcmd_dir,          String, default: '/opt/steam'
