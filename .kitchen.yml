@@ -1,0 +1,17 @@
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  deprecations_as_errors: true
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: ubuntu-16.04
+
+suites:
+- name: resources
+  run_list:
+  - recipe[test]
