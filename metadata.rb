@@ -9,3 +9,7 @@ chef_version '>= 12.1' if respond_to?(:chef_version)
 issues_url 'https://github.com/f0rkz/chef-steamcmd/issues'
 source_url 'https://github.com/f0rkz/chef-steamcmd'
 depends 'tar'
+
+%w(ubuntu debian).each do |os|
+  supports os
+end
