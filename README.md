@@ -56,13 +56,14 @@ Steamcmd LWRP used to install steam games to a directory.
 
 ### Properties
 
-* `user`: User to install steamcmd. (Default: `root`)
-* `group`: Group to install steamcmd. (Default: `root`)
-* `steamcmd_dir`: Steamcmd install directory. (Default: `/opt/steam`)
-* `base_game_dir`: Base dir to install game files. (Default: `/opt/steamgames`)
-* `appid`: The steam appid. See: https://steamdb.info/ (Required)
-* `login`: Optional steam login (Default: `anonymous`)
-* `password`: Optional steam password (Default `nil`)
+* `user`: `String` User to install steamcmd. (Default: `root`)
+* `group`: `String` Group to install steamcmd. (Default: `root`)
+* `steamcmd_dir`: `String` Steamcmd install directory. (Default: `/opt/steam`)
+* `base_game_dir`: `String` Base dir to install game files. (Default: `/opt/steamgames`)
+* `appid`: `String` The steam appid. See: https://steamdb.info/ (Required)
+* `login`: `String` Optional steam login (Default: `anonymous`)
+* `password`: `String` Optional steam password (Default `nil`)
+* `check_files`: `[True, False]` Runs app_update with the `validate` option enabled. (Default: `false`)
 
 ### Example Usage
 ```ruby

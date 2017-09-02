@@ -15,5 +15,6 @@ steamcmd_app 'install hldm' do
   appid '90'
   user 'steam'
   group 'steam'
+  check_files true
   action :install
 end

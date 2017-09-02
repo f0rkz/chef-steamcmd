@@ -20,20 +20,25 @@
 #
 resource_name :steamcmd_app
 
+property :name,                  String, name_property: true
 property :user,                  String, default: 'root'
 property :group,                 String, default: 'root'
 property :steamcmd_dir,          String, default: '/opt/steam'
 property :base_game_dir,         String, default: '/opt/steamgames'
-property :appid,                 String
+property :appid,                 String, required: true
 property :login,                 String, default: 'anonymous'
 property :password,              String
+# Unfortunately the property name "validate" is reserved or something...
+# This is actually the +validate option in steam.
+property :check_files,           [true, false], default: false
 
 default_action :install
 
 action :install do
   app = new_resource
 
-  Chef::Application.fatal!('No appid defined!') unless app.appid
+  launch_password = "+password #{app.password}" if app.password
+  launch_validate = "validate" if app.check_files
 
   directory app.base_game_dir do
     owner app.user
@@ -50,25 +55,13 @@ action :install do
     action :install
   end
 
-  if app.password
-    execute 'Install steamapp with password' do
-      user app.user
-      group app.group
-      command <<-EOL
-      #{app.steamcmd_dir}/steamcmd.sh +login #{app.login} +password #{app.password} +force_install_dir #{app.base_game_dir}/#{app.appid} +app_update #{app.appid} +quit
-      EOL
-      action :run
-      live_stream true
-    end
-  else
-    execute 'Install steamapp without password' do
-      user app.user
-      group app.group
-      command <<-EOL
-      #{app.steamcmd_dir}/steamcmd.sh +login #{app.login} +force_install_dir #{app.base_game_dir}/#{app.appid} +app_update #{app.appid} +quit
-      EOL
-      action :run
-      live_stream true
-    end
+  execute 'Install steamapp' do
+    user app.user
+    group app.group
+    command <<-EOL
+    #{app.steamcmd_dir}/steamcmd.sh +login #{app.login} #{launch_password} +force_install_dir #{app.base_game_dir}/#{app.appid} +app_update #{app.appid} #{launch_validate} +quit
+    EOL
+    action :run
+    live_stream true
   end
 end
