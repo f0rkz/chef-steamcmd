@@ -1,0 +1,37 @@
+---
+driver:
+  name: dokken
+  privileged: true # because Docker and SystemD/Upstart
+  chef_version: current
+  chef_license: accept-no-persist
+
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
+  deprecations_as_errors: true
+  policyfile: test/cookbooks/test/Policyfile.rb
+
+verifier:
+  name: inspec
+
+platforms:
+- name: ubuntu-18.04
+  driver:
+    image: ubuntu:18.04
+    # pid_one_command: /usr/bin/env systemd
+    intermediate_instructions:
+      - RUN /usr/bin/apt-get update
+      - RUN /usr/bin/apt-get install apt-transport-https lsb-release procps net-tools -y
+
+- name: ubuntu-20.04
+  driver:
+    image: ubuntu:20.04
+    # pid_one_command: /usr/bin/env systemd
+    intermediate_instructions:
+      - RUN /usr/bin/apt-get update
+      - RUN /usr/bin/apt-get install apt-transport-https lsb-release procps net-tools -y
+
+suites:
+- name: resources
