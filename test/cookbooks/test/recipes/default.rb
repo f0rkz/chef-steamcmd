@@ -11,10 +11,10 @@ user 'steam' do
   shell '/bin/bash'
 end
 
-steamcmd_app 'install hldm' do
-  appid '90'
-  user 'steam'
-  group 'steam'
-  check_files true
+steamcmd_app 'install terraria dedi' do
+  steamcmd_appid '222840'
+  steamcmd_user 'steam'
+  steamcmd_group 'steam'
+  steamcmd_validate true
   action :install
 end

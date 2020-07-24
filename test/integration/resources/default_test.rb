@@ -10,7 +10,8 @@ describe file('/opt/steam/steamcmd.sh') do
   its('group') { should eq 'steam' }
 end
 
-describe file('/opt/steamgames/90/hlds_linux') do
+# describe file('/opt/steamgames/90/hlds_linux') do
+describe file('/opt/steamgames/222840/hl2.sh') do
   it { should exist }
   it { should be_file }
   it { should be_owned_by 'steam' }
