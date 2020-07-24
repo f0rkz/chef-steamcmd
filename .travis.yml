@@ -1,12 +1,12 @@
 sudo: required
-dist: trusty
+dist: bionic
 
 addons:
   apt:
     sources:
-      - chef-current-trusty
+      - chef-current-bionic
     packages:
-      - chefdk
+      - chef-workstation
 
 # Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
@@ -18,8 +18,9 @@ branches:
 services: docker
 
 env:
-  matrix:
-  - INSTANCE=resources-ubuntu-1604
+  - CHEF_LICENSE=accept
+  - INSTANCE=resources-ubuntu-1804
+  - INSTANCE=resources-ubuntu-2004
   - KITCHEN_YAML=.kitchen.dokken.yml
 
 before_script:
@@ -27,6 +28,5 @@ before_script:
   - eval "$(chef shell-init bash)"
   - chef --version
   - cookstyle --version
-  - foodcritic --version
 
 script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen verify ${INSTANCE}
