@@ -19,47 +19,47 @@
 # limitations under the License.
 #
 resource_name :steamcmd_app
+provides :steamcmd_app
 
-property :name,                  String, name_property: true
-property :user,                  String, default: 'root'
-property :group,                 String, default: 'root'
-property :steamcmd_dir,          String, default: '/opt/steam'
-property :base_game_dir,         String, default: '/opt/steamgames'
-property :appid,                 String, required: true
-property :login,                 String, default: 'anonymous'
-property :password,              String
+property :steamcmd_user,                  String, default: 'root'
+property :steamcmd_group,                 String, default: 'root'
+property :steamcmd_dir,                   String, default: '/opt/steam'
+property :steamcmd_base_game_dir,         String, default: '/opt/steamgames'
+property :steamcmd_appid,                 String, required: true
+property :steamcmd_login,                 String, default: 'anonymous'
+property :steamcmd_password,              String
 # Unfortunately the property name "validate" is reserved or something...
 # This is actually the +validate option in steam.
-property :check_files,           [true, false], default: false
+property :steamcmd_validate,              [true, false], default: false
 
 default_action :install
 
 action :install do
   app = new_resource
 
-  launch_password = "+password #{app.password}" if app.password
-  launch_validate = "validate" if app.check_files
+  launch_password = "+password #{app.steamcmd_password}" if app.steamcmd_password
+  launch_validate = 'validate' if app.steamcmd_validate
 
-  directory app.base_game_dir do
-    owner app.user
-    group app.group
+  directory app.steamcmd_base_game_dir do
+    owner app.steamcmd_user
+    group app.steamcmd_group
     mode '0755'
     recursive true
     action :create
   end
 
   steamcmd_cli 'install steamcmd' do
-    user app.user
-    group app.group
-    install_dir app.steamcmd_dir
+    steamcmdcli_user app.steamcmd_user
+    steamcmdcli_group app.steamcmd_group
+    steamcmdcli_install_dir app.steamcmd_dir
     action :install
   end
 
   execute 'Install steamapp' do
-    user app.user
-    group app.group
+    user app.steamcmd_user
+    group app.steamcmd_group
     command <<-EOL
-    #{app.steamcmd_dir}/steamcmd.sh +login #{app.login} #{launch_password} +force_install_dir #{app.base_game_dir}/#{app.appid} +app_update #{app.appid} #{launch_validate} +quit
+    #{app.steamcmd_dir}/steamcmd.sh +login #{app.steamcmd_login} #{launch_password} +force_install_dir #{app.steamcmd_base_game_dir}/#{app.steamcmd_appid} +app_update #{app.steamcmd_appid} #{launch_validate} +quit
     EOL
     action :run
     live_stream true
