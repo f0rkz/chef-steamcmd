@@ -19,39 +19,43 @@
 # limitations under the License.
 #
 resource_name :steamcmd_cli
+provides :steamcmd_cli
 
-property :user,                  String, default: 'root'
-property :group,                 String, default: 'root'
-property :download_dir,          String, default: '/tmp'
-property :url,                   String, default: 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz'
-property :install_dir,           String, default: '/opt/steam'
+property :steamcmdcli_user,                  String, default: 'root'
+property :steamcmdcli_group,                 String, default: 'root'
+property :steamcmdcli_download_dir,          String, default: '/tmp'
+property :steamcmdcli_url,                   String, default: 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz'
+property :steamcmdcli_install_dir,           String, default: '/opt/steam'
 
 default_action :install
 
 action :install do
   package 'lib32gcc1'
+  package 'ca-certificates' do
+    options('--reinstall')
+  end
   s = new_resource
 
-  directory s.install_dir do
-    owner s.user
-    group s.group
+  directory s.steamcmdcli_install_dir do
+    owner s.steamcmdcli_user
+    group s.steamcmdcli_group
     mode '0755'
     recursive true
     action :create
   end
 
-  tar_extract s.url do
-    download_dir s.download_dir
-    target_dir s.install_dir
-    user s.user
-    group s.group
+  tar_extract s.steamcmdcli_url do
+    download_dir s.steamcmdcli_download_dir
+    target_dir s.steamcmdcli_install_dir
+    user s.steamcmdcli_user
+    group s.steamcmdcli_group
   end
 
   execute 'run steamcmd' do
-    user s.user
-    group s.group
+    user s.steamcmdcli_user
+    group s.steamcmdcli_group
     command <<-EOL
-    #{s.install_dir}/steamcmd.sh +quit
+    #{s.steamcmdcli_install_dir}/steamcmd.sh +quit
     EOL
     action :run
   end

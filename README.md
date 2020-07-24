@@ -6,7 +6,10 @@ Cookbook for managing Steamcmd based dedicated servers.
 
 # Usage
 
+Include `cookbook 'chef-steamcmd'` with source material (if needed) in your Policyfile.rb, or
 Include `depends 'chef-steamcmd'` in your `metadata.rb`
+
+See [the test cookbook](test/cookbooks/test/) for a rudimentary example.
 
 # Resources
 
@@ -22,11 +25,11 @@ and nothing else installed.
 
 ### Properties
 
-* `user`: User to install steamcmd. (Default: `root`)
-* `group`: Group to install steamcmd. (Default: `root`)
-* `download_dir`: Directory to download the steamcmd tarfile. (Default: `/tmp`)
-* `url`: Steamcmd tarfile to install. (Default: `https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz`)
-* `install_dir`: Directory to install steamcmd files. (Default: `/opt/steam`)
+* `steamcmdcli_user`: User to install steamcmd. (Default: `root`)
+* `steamcmdcli_group`: Group to install steamcmd. (Default: `root`)
+* `steamcmdcli_download_dir`: Directory to download the steamcmd tarfile. (Default: `/tmp`)
+* `steamcmdcli_url`: Steamcmd tarfile to install. (Default: `https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz`)
+* `steamcmdcli_install_dir`: Directory to install steamcmd files. (Default: `/opt/steam`)
 
 ### Example Usage
 ```ruby
@@ -39,9 +42,9 @@ user 'steam' do
 end
 
 steamcmd_cli 'install steamcmd' do
-  user 'steam'
-  group 'steam'
-  install_dir '/home/steam/steamcmd'
+  steamcmdcli_user app.steamcmd_user
+  steamcmdcli_group app.steamcmd_group
+  steamcmdcli_install_dir app.steamcmd_dir
   action :install
 end
 ```
@@ -52,18 +55,17 @@ Steamcmd LWRP used to install steam games to a directory.
 
 ### Actions
 
-`:install`: (default) Installs steamcmd, installs gamefiles
+`:install`: (default) Installs steamcmd, installs game files
 
 ### Properties
 
-* `user`: `String` User to install steamcmd. (Default: `root`)
-* `group`: `String` Group to install steamcmd. (Default: `root`)
-* `steamcmd_dir`: `String` Steamcmd install directory. (Default: `/opt/steam`)
-* `base_game_dir`: `String` Base dir to install game files. (Default: `/opt/steamgames`)
-* `appid`: `String` The steam appid. See: https://steamdb.info/ (Required)
-* `login`: `String` Optional steam login (Default: `anonymous`)
-* `password`: `String` Optional steam password (Default `nil`)
-* `check_files`: `[True, False]` Runs app_update with the `validate` option enabled. (Default: `false`)
+* `steamcmd_user`: `String` User to install steamcmd. (Default: `root`)
+* `steamcmd_group`: `String` Group to install steamcmd. (Default: `root`)
+* `steamcmd_base_game_dir`: `String` Base dir to install game files. (Default: `/opt/steamgames`)
+* `steamcmd_appid`: `String` The steam appid. See: https://steamdb.info/ (Required)
+* `steamcmd_login`: `String` Optional steam login (Default: `anonymous`)
+* `steamcmd_password`: `String` Optional steam password (Default `nil`)
+* `steamcmd_validate`: `[True, False]` Runs app_update with the `validate` option enabled. (Default: `false`)
 
 ### Example Usage
 ```ruby
@@ -75,10 +77,11 @@ user 'steam' do
   shell '/bin/bash'
 end
 
-steamcmd_app 'install hldm' do
-  appid '90'
-  user 'steam'
-  group 'steam'
+steamcmd_app 'install terraria dedi' do
+  steamcmd_appid '222840'
+  steamcmd_user 'steam'
+  steamcmd_group 'steam'
+  steamcmd_validate true
   action :install
 end
 ```
