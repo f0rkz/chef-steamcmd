@@ -19,11 +19,9 @@ branches:
 services: docker
 
 env:
-  - CHEF_LICENSE=accept
-  - INSTANCE=resources-ubuntu-1804
-  - INSTANCE=resources-ubuntu-2004
-  - KITCHEN_YAML=.kitchen.dokken.yml
-
+  - INSTANCE=resources-ubuntu-1804 CHEF_LICENSE=accept
+  - INSTANCE=resources-ubuntu-2004 CHEF_LICENSE=accept
+  
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(chef shell-init bash)"
